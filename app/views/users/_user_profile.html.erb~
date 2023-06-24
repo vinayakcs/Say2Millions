@@ -1,0 +1,50 @@
+<div id="user_profile">
+<%if is_content_owner(@user.id) %>
+<% if !@user.unpublishedarticle.nil? %>
+<div id="edit_article_link">
+<%=link_to 'Edit Article', edit_user_unpublishedarticle_path(@user,@user.unpublishedarticle) %>
+</div>
+<%else%>
+<div id="new_article_link">
+<%=link_to 'Add Article', new_user_unpublishedarticle_path(@user) %>
+</div>
+<%end%>
+<div id="edit_user_profile_link">
+<%=link_to 'Edit profile', edit_user_path(@user) %>
+</div>
+<%end%>
+<div id="user_profile_img">
+<img src="https://graph.facebook.com/<%=@user.uid%>/picture?type=large">
+</div>
+
+
+
+
+<div id="user_profile_name">
+<%=@user.name%> <%=@user.last_name%>
+</div>
+<br>
+<div id="user_profile_article_count">
+<i class="fa fa-file-text"></i> 
+<% if @user.article_count>0%>
+<%= link_to pluralize(@user.article_count, 'article'),root_path(:filter => "user",:user=>@user.id)%>
+<%else%>
+No articles yet
+<%end%>
+</div>
+<br>
+<div id="user_profile_bio">
+<%=sanitize @user.user_description%>
+</div>
+<br>
+<% if @user.islucky && !current_user.nil? %>
+<%= render :partial => "/articles/new_article" %>
+<% end %>
+<%= render :partial => '/comments/fb_comment' %>
+
+<%# render :partial => "/comments/display", :locals => {:commentts => @user.comments, :parent=>@user} %>
+
+</div><%#user_profile%>
+
+
+

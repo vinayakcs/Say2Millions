@@ -1,0 +1,12 @@
+
+<%= form_for [commentable, Comment.new], remote:true do |form| %>
+<div id="comment_area">
+  <ul class="formList">
+    <li>
+      <%= form.text_area :description, :rows => 5, :class=>("auth_pop" unless is_authed?) %>
+
+    </li>
+    <li><%= submit_tag "Add comment", :class=>["pull-right",("auth_pop" unless is_authed?)] %></li>
+  </ul>
+</div>
+<% end %>

@@ -1,0 +1,9 @@
+<%= form_for :article do |f| %>
+  <%= f.label :title, "Title" %><br />
+  <%= f.text_field :title, :id=>"article_title_form" %><br />
+  <%= f.label :description, "Post" %><br />
+  <%= f.text_area :description, :id=>"article_post_form" %><br />
+  <%= f.label :tag_list, "Tags (separated by commas)" %><br />
+  <%= f.text_field :tag_list, :id=>"article_tag_list_form" %>
+  <%= f.submit %>
+<% end %>

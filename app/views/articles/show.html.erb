@@ -1,0 +1,74 @@
+<%= render :partial => '/layouts/meta', :locals => {:article => @article,:user=>nil, :isHome=>false} %>
+<div id="article_info">
+<div id="article_author">
+<%= link_to @article.user do %>
+    <%= image_tag "https://graph.facebook.com/#{@article.fbuid}/picture?width=300"%>
+<% end %>
+</div>
+<div id="article_title">
+<%= escape_javascript @article.title %>
+</div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+           <div id="article_views">
+<i class="fa fa-eye"></i><%= pluralize(@article.view_count,'view') %>
+</div>
+        </div>
+        <div class="col-xs-6">
+            <div id="article_votes">
+<%= render :partial => "/votes/vote", :locals => {:article => @article} %>
+</div>
+        </div>
+    </div>
+</div><br>
+
+
+
+
+    				<ul class="list-inline">
+					<li>
+    					    <span data-original-title="Share"    data-placement="left">
+								Share:
+							</span>
+					</li>
+        				<li>
+    					    <a data-original-title="Twitter" rel="tooltip"  href="#" class="btn btn-twitter" data-placement="left">
+								<i class="fa fa-twitter"></i>
+							</a>
+    					</li>
+    					<li>
+    						<a data-original-title="Facebook" rel="tooltip"  href="#" class="btn btn-facebook" data-placement="left">
+								<i class="fa fa-facebook"></i>
+							</a>
+    					</li>					
+    					<li>
+    						<a data-original-title="Google+" rel="tooltip"  href="#" class="btn btn-google" data-placement="left">
+								<i class="fa fa-google-plus"></i>
+							</a>
+    					</li>
+    				    <li>
+    						<a data-original-title="LinkedIn" rel="tooltip"  href="#" class="btn btn-linkedin" data-placement="left">
+								<i class="fa fa-linkedin"></i>
+							</a>
+    					</li>
+                    </ul>
+
+
+<div id="article_description">
+<%= sanitize @article.description %>
+</div>
+
+<%= render :partial => '/comments/fb_comment' %>
+
+
+<% if false %>
+<div id="article_comment">
+<%= render :partial => "/comments/display", :locals => { :parent=>@article} %>
+</div>
+<%end%>
+
+</div> <!-- article_info-->

@@ -1,0 +1,12 @@
+var s2mutils=utils();
+<% for article in @articles %>
+
+$('#article_preview_container').append("<%= escape_javascript  render :partial => 'articles/article_preview', :locals => {:article => article} %>");
+<%end%>
+<% if @isLastResults==true %>
+$('#article_preview_container').after("<%= escape_javascript render :partial => 'layouts/noresult' %>");
+$('#load_more').remove();
+<%else%> 
+var oldUrl=$('#load_more').attr('href');
+$('#load_more').attr('href',s2mutils.setLoadMoreParam(oldUrl));
+<%end%>

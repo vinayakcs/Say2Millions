@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: comments
+#
+#  id               :integer          not null, primary key
+#  description      :text
+#  created_at       :datetime
+#  updated_at       :datetime
+#  commentable_id   :integer
+#  commentable_type :string(255)
+#  user_uid         :string(255)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+
+two:
+  description: MyText

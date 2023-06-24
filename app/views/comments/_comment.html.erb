@@ -1,0 +1,31 @@
+<div id="comment_<%=comment.id%>">
+<div id="comment_user_pic">
+<img src="https://graph.facebook.com/<%=comment.user_uid%>/picture?type=large">
+</div>
+<div id="comment_description">
+<%=escape_javascript comment.description%>
+</div>
+<div id="comment_time">
+<%=time_ago_in_words(comment.updated_at)%> ago
+</div>
+<% if is_content_owner(comment.user_uid) %>
+
+<div class="comment_edit_icon">
+Edit
+</div>
+<div id="comment_edit" style="display:none" >
+<%=form_for([commentable,comment],remote:true) do |f|%>
+<%=f.text_area :description, :rows => 5 %>
+<%=f.submit "Update"%>
+<%end%>
+</div>
+
+<div id="comment_delete">
+<%=form_for([commentable,comment],html:{method: :delete, data: {confirm: "sure?"}}, remote: true) do |f| %>
+<%= f.submit "Delete" %>
+<%end%>
+</div>
+
+
+<%end%>
+</div>

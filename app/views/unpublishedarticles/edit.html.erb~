@@ -1,0 +1,40 @@
+
+<%=render :partial => '/layouts/flash' %>
+<br>
+<div class="contentpanel centerize">
+<div class="col-md-12">
+<div class="panel panel-default">
+<div class="panel-heading">
+<h3 class="panel-title">Article</h3>
+</div>
+<div class="panel-body">
+<%= form_for [current_user,current_user.unpublishedarticle] do |form| %>
+
+<div class="form-group row">
+      <%= form.label :title,:class=>"col-sm-3 control-label required" %>
+      <%= form.text_field :title,:class=>"col-sm-6" %>
+</div>
+<div class="form-group row">
+      <%= form.label :category, 'Category',:class=>"col-sm-3 control-label required" %>
+      <div class="col-sm-6">
+      <%= form.select( :category, Article.get_category_list,:class=>"form-control")  %>
+      </div>
+</div>
+
+<div class="form-group row">
+      <%= form.label :description,:class=>"col-sm-3 control-label required" %>  
+  
+      <%= form.text_area :description , :rows=>8,:class=>"col-sm-6"%>
+</div>
+<div class="form-group row">
+   <%= submit_tag "Post Article",:class=>"btn btn-danger",:name=>"submit" %>
+  </ul>
+</div>
+
+<% end %>
+</div>
+</div>
+
+
+</div>
+</div>

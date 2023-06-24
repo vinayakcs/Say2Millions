@@ -1,0 +1,43 @@
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<% if isHome ==true && article.nil? %>
+<% content_for :head do %>
+         <meta name="description" content="An online lottery for communicating with millions, get lucky and become a celebrity" />
+         <meta name="keywords" content="celebrity,million friends,audience,views,opinions,discuss" />
+	 <meta property="og:title" content="Say2Millions"/>	
+	 <meta property="og:url" content="http://www.say2millions.com"/>	
+	 <meta property="og:image" content="http://www.say2millions.com/images/pending_logo_creation"/>
+	 <meta property="og:description" content="An online lottery for communicating with millions, get lucky and become a celebrity" />
+
+
+
+         <meta name="twitter:card" content="summary" />
+         <meta name="twitter:site" content="@say2millions" />
+         <meta name="twitter:title" content="Say2Millions" />
+         <meta name="twitter:description" content="An online lottery for communicating with millions, get lucky and become a celebrity" />
+         <meta name="twitter:image" content="http://www.say2millions.com/images/pending_logo_creation" />
+         <meta name="twitter:url" content="http://www.say2millions.com" />
+
+
+<% end %> 
+<%elsif isHome ==false && !article.nil? %>
+
+<% content_for :head do %>
+<%=puts "poop" %>
+<%= puts article.inspect %>
+	 <meta property="og:title" content="<%=truncate(article.title, length: 80)%>"/>	
+	 <meta property="og:url" content="<%= root_url+article.get_relative_link  %>"/>	
+	 <meta property="og:image" content="<%=article.image_url%>"/>
+	 <meta property="og:description" content="<%=truncate(article.description,length: 120)%>" />
+
+         <meta name="twitter:card" content="summary" />
+         <meta name="twitter:site" content="@say2millions" />
+         <meta name="twitter:title" content="<%=truncate(article.title,length: 20)%>" />
+         <meta name="twitter:description" content="<%=truncate(article.description,length: 40)%>" />
+         <meta name="twitter:image" content="<%=article.image_url%>" />
+         <meta name="twitter:url" content="<%= root_url+article.get_relative_link  %>" />
+
+<% end %> 
+
+<%end%>

@@ -1,0 +1,26 @@
+<div id="edit_user_profile">
+<div id="edit_heading">
+EDIT PROFILE
+</div><br>
+
+<%=form_for @user do |f| %>
+	      <div class="form-group row">
+		<%= f.label :name, "First Name",:class=>"col-md-3" %>
+		<%= f.text_field :name,:class=>"col-md-8",:maxlength => 50 %>
+	      </div>
+	      <div class="form-group row">
+		<%= f.label :name, "Last Name",:class=>"col-md-3" %>
+		<%= f.text_field :last_name,:class=>"col-md-8",:maxlength => 50 %>
+	      </div>
+	      <div class="form-group row">
+		<%= f.label :user_description, "Description(500 limit)",:class=>"col-md-3" %>
+		<%= f.text_area :user_description,:class=>"col-md-8" %>
+	      </div>
+<br>
+	      <div style="text-align:center;"><div class="actions"><%= f.submit "Submit",:class=>"btn btn-default" %></div></div>
+
+<%end%>
+
+
+
+</div>

@@ -1,0 +1,9 @@
+class AddUserDescriptionAndArticleCountAndCommentCountAndIsvisibleAndRespectToUser < ActiveRecord::Migration
+  def change
+    add_column :users, :user_description, :text
+    add_column :users, :article_count, :integer, default: 0
+    add_column :users, :comment_count, :integer, default: 0
+    add_column :users, :isvisible, :boolean
+    add_column :users, :respect, :integer
+  end
+end

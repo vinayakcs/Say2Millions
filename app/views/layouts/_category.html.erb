@@ -1,0 +1,14 @@
+
+    <div class="row col-lg-12" id="category">
+
+            <ul class="list-inline">
+<%Article.get_category_list.each do |category|%>
+                <li>
+<%= link_to category ,root_path(:filter => category), :title => category, :class=>"btn btn-default category_btn #{'active' if current_page? ()}" %>
+		</li>
+
+<%end%>
+
+            </ul>
+
+    </div>

@@ -1,0 +1,11 @@
+<% if @vote_saved==true%>
+$('#vote_count_submit').text("<%=pluralize(@new_vote_count, 'vote') %>");
+<% if @voteType == "up" %>
+$('#vote_down_icon').removeClass('vote_disabled');
+$('#vote_up_icon').addClass('vote_disabled');
+<%elsif @voteType == "down" %>
+$('#vote_up_icon').removeClass('vote_disabled');
+$('#vote_down_icon').addClass('vote_disabled');
+<%end%>
+
+<%end%>

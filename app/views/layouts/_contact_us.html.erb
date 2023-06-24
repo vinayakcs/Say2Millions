@@ -1,0 +1,39 @@
+
+	<div class="content_contactus">
+	  <div id="feedback" >
+	    <h2 class="bar" ><b>Submit your Feedback</b></h2>
+	    <%= form_for FeedbackMessage.new,:url => url_for(:controller => 'feedback_messages', :action => 'create') do |f| %>
+	      
+	      <div class="info">
+	      </div>
+	      <div class="special_email_field" style="display:none;">
+		<%= label_tag :email %>
+		<%= text_field_tag :email, "", :autocomplete => "off" %>
+		(do not fill)
+	      </div>
+	      <div class="form-group row">
+		<%= f.label :name, "Name*",:class=>"col-md-3" %>
+		<%= f.text_field :name,:class=>"col-md-8" %>
+	      </div>
+	      <div class="form-group row">
+		<%= f.label :email, "Email ID*",:class=>"col-md-3" %>
+		<%= f.text_field :email,:class=>"col-md-8" %>
+	      </div>
+	      <div class="form-group row">
+		<%= f.label :content, "Message",:class=>"col-md-3" %>
+		<%= f.text_area :content,:class=>"col-md-8" %>
+	      </div>
+
+<br>
+
+	      <div class="form-group row">
+		<%= f.label :feedback_type, "Feedback Type*",:class=>"col-md-3" %>
+	       
+		<%=f.select(:feedback_type, options_for_select([['Complaint', 'Complaint'], ['Appreciation', 'Appreciation']]),:class=>"col-md-9") %>
+	     </div>
+	      <div style="text-align:center;"><div class="actions"><%= f.submit "Submit",:class=>"btn btn-default" %></div></div>
+	    <% end %>
+	  </div>
+	  
+	</div>
+

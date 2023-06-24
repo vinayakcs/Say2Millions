@@ -1,0 +1,100 @@
+require 'twitter'
+include ActionView::Helpers::TextHelper
+
+namespace :cron_fb_tasks do
+
+  desc "handleLuckyUserSelection"
+  task getLuckyUserAndNotify: :environment do
+   @user=addAndGetLuckyUser
+  end
+
+  desc "handleNewArticle"
+  task getLuckyUsersArticleAndPushToSocialPage: :environment do
+   #tweetArticle
+   postToFB
+   revokeLuckyUserIfExist
+   @article = addAndGetAnyNewArticle
+   @user=nil
+   if !@article.nil?
+    @user=User.find_by_uid(@article.uid)
+    @user.update_article_count(true)
+   end
+  end
+
+  def addAndGetAnyNewArticle
+   todays_article_count = Article.todays_article_count
+   article=nil
+   if todays_article_count>0
+    #User entered article
+    article=Article.last
+    article.is_visible=true
+    article.save
+   else
+    #User not entered article
+   end
+   return article
+  end
+
+
+  def revokeLuckyUserIfExist
+   user=User.getChosenUser
+   if !user.nil?
+    user.islucky=false 
+    if !user.save
+     Rails.logger.error("BAD ::: revokeAndGetLuckyUser fails to clear luckyuser!!!!!!!!!!!!!!!!!!!!!!!!!")
+    end
+   end
+  end
+
+
+  def addAndGetLuckyUser
+   user = User.getLuckyUser
+   if !user.nil?
+    user.islucky=true
+      if !user.save
+       Rails.logger.error("BAD ::: addAndGetLuckyUser fails to save the user!!!!!!!!!!!!!!!!!!!!!!!!!")
+       user=nil
+      end
+    User.setChosenUser(user)
+   else
+    Rails.logger.error("BAD ::: addAndGetLuckyUser gets no luckyuser")
+   end
+   return user
+  end
+
+  def tweetArticle
+   puts "hit tweet"
+   twitterClient = Twitter::Client.new 
+   twitterClient.consumer_key='bvmAeQCAWvw5O6VzRNx9lq0DZ'
+   twitterClient.consumer_secret='PxXC0fbgRXNW89JFQOQDhNY1St5LtGVRWfkUEqjJhks19OdJWr'
+   twitterClient.oauth_token='2401022568-VznrlDOEuN7bOGgHWdT1hA5FYtJcmh12M14gTWP'
+   twitterClient.oauth_token_secret='VVbH8zFWJ1ZP4XtpKsJpKkc99cjxelqAKQQWa3lctvVfh'
+   Rails.logger.info "tweeting..."
+   puts "tweeting"
+   article=Article.get_todays_articles
+    
+   #author_name=article.user.name
+   title=truncate(article.title, :length => 60)
+   article_link= 'https://www.say2millions.com/'.to_str+article.get_relative_link
+   puts title
+   puts article_link
+   puts twitterClient.inspect 
+   puts title+"\n\n".to_str+article_link
+   twitterClient.update(title.to_str+"\n\n".to_str+article_link.to_str)
+   Rails.logger.info "tweeted"+title+" "+article_link
+  end
+
+  def postToFB
+   @page_graph = Koala::Facebook::API.new("CAAJkuWJmCZA4BACCkV0806A5aJieG2kiUUM7WZCBGBvDVYDidgNOYgZAj9gO3WKmD27ZAw7HhBHzqopYOwgQVimrDJnEYVAuNRLYbui6l6FNcFgKKE0q9LMW2SjypKMgVYFcEEAMfXZBjFGbzJTZAah6ZA8bMaU8rRSXc4GMnjWZC1x3bkUPp05J")
+   Rails.logger.info "post to fb..."
+   puts "hits fb"
+   article=Article.get_todays_articles
+   author_name=article.user.name
+   #author_fb_link="http://www.facebook.com/"+article.fbuid
+   title=truncate(article.title, :length => 60)
+   message=title+"\n\n"+"by "+author_name
+   article_link= 'https://www.say2millions.com/'.to_str+article.get_relative_link
+   @page_graph.put_connections('1458884127662194', 'feed', :message => message.to_str, :link => article_link.to_str)
+   Rails.logger.info "fb post"+message+" "+article_link
+  end 
+end

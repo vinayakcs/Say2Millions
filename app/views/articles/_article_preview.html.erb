@@ -1,0 +1,58 @@
+<div id="article_preview">
+
+<div id="article_author_profile_image">
+<%= link_to article.user do %>
+    <%= image_tag "https://graph.facebook.com/#{article.fbuid}/picture?width=300", alt: "user_profile_image" %>
+<% end %>
+</div><!--article_author_profile_image -->
+
+<div id="article_preview_body">
+
+<div id="article_title">
+<%=  link_to  article do%> 
+ <%= escape_javascript article.title %>
+<%end%>
+
+</div><!-- article_title-->
+
+<div id="article_description">
+<%= sanitize truncate(article.description, :length => 60)%>
+</div><!-- article_description-->
+
+<div id="article_preview_footer">
+<ul class="list-inline">
+
+ <li>
+<div id="article_vote_count">
+<i class="fa fa-chevron-circle-up"></i><%= pluralize(article.vote_count,'vote') %>
+</div><!--article_vote_count-->
+</li>
+<% if false %> 
+<li>
+<div id="article_comment_count">
+<i class="fa fa-comment"></i><%= pluralize(article.comment_count,'comment') %>
+</div><!--article_comment_count-->
+</li>
+<%end%>
+<li>
+<div id="article_view_count">
+<i class="fa fa-eye"></i> <%= pluralize(article.view_count,'view') %>
+</div><!--article_view_count-->
+</li>
+<li>
+<div id="article_created_at">
+<i class="fa fa-clock-o"></i> <%=time_ago_in_words(article.created_at)%> ago
+</div><!-- article_created_at -->
+</li>
+</ul>
+
+</div><!--article preview footer -->
+
+</div><!-- article preview body -->
+
+
+
+
+</div><!-- article_preview -->
+<div style="clear:both"></div>
+

@@ -1,0 +1,13 @@
+class CreateUnpublishedarticles < ActiveRecord::Migration
+  def change
+    create_table :unpublishedarticles do |t|
+      t.string :title
+      t.string :description
+      t.string :user_id
+      t.string :category
+      t.string :fbuid
+
+      t.timestamps
+    end
+  end
+end

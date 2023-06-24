@@ -1,0 +1,65 @@
+<div id="vote_widget">
+
+
+
+<% if check_auth_user? %>
+
+<% vote = current_user.getVoteForArticle(article.id) %>
+<% if vote.nil? %> 
+<% vote=Vote.new %>
+
+<% end %>
+
+<% if vote.vote_type=="up" %>
+<div id="vote_up_icon" class="vote_disabled cursor_pointer">
+<% else %>
+<div id="vote_up_icon">
+<%end%>
+<%= form_for([article,vote],:url => url_for(:controller => 'votes', :action => 'manage_vote'), remote: true) do |f| %>
+<div><%= f.hidden_field :vote_type, value: "up" %></div>
+
+<button type="submit" class="vote_up_submit" >
+   <i class="fa fa-chevron-circle-up"></i>
+</button>
+
+
+<% end %>
+</div><!-- vote_up_icon-->
+<div id="vote_count_submit">
+<%= pluralize(article.vote_count,'vote') %>
+</div>
+<%if vote.vote_type=="down" %>
+<div id="vote_down_icon" class="vote_disabled cursor_pointer">
+<%else%>
+<div id="vote_down_icon">
+<%end%>
+<%= form_for([article,vote],:url => url_for(:controller => 'votes', :action => 'manage_vote'), remote: true) do |f| %>
+<div><%= f.hidden_field :vote_type, value: "down" %></div>
+
+
+
+
+<button type="submit"  class="vote_down_submit" >
+   <i class="fa fa-chevron-circle-down"></i>
+</button>
+<% end %>
+</div> <!-- vote_down_icon -->
+
+
+<%else%>
+
+
+<div id="vote_up_icon" class="auth_pop cursor_pointer" data-toggle="modal" data-target="#loginModal">
+<i class="fa fa-chevron-circle-up"></i>
+</div><!-- vote_up_icon-->
+<div id="vote_count">
+<%# all objects must have vote_count param which will be incremented on saving, thus preventing joins %>
+<%= pluralize(article.vote_count,'vote') %>
+</div>
+<div id="vote_down_icon" class="auth_pop cursor_pointer" data-toggle="modal" data-target="#loginModal">
+<i class="fa fa-chevron-circle-down"></i>
+</div> <!-- vote_down_icon -->
+
+<%end%>
+
+</div><!-- vote_widget-->

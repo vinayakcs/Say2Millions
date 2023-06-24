@@ -1,0 +1,37 @@
+<%= render :partial => '/layouts/meta', :locals => {:article => nil,:user=>nil, :isHome=>true} %>
+<%= render :partial => '/layouts/sort' %>
+<div id="article_preview_container">
+<% user=User.getChosenUser %>
+<% if !user.nil? %>
+	<div id="lucky_user_home">
+		<div id="lucky_user_home_message">
+		Today's lucky celebrity is <%=user.name%> <%=user.last_name%>
+		</div>
+		<div id="lucky_user_profile_img">
+		<%= link_to image_tag("https://graph.facebook.com/#{user.uid}/picture?type=large", :border => 0),user, {:class => 'dock-item'}%>
+
+		</div>
+
+	</div>
+<%end%>
+<% if @articles.nil? or !(@articles.size>0) %>
+<div id="no_article_message">
+NO Articles YET !!!
+</div>
+<%else%>
+	<% @articles.each do |article| %>
+	<%=  render :partial => 'articles/article_preview', :locals => {:article => article} %>
+	<%end%>
+
+
+
+<%end%>
+</div>
+
+<div class="col-md-12 text-center">
+
+ <% if (!@articles.nil? && !(@articles.length<5)) %>
+<%= link_to "Next page", articles_path(:page=>2),  :method => "post", :class =>" btn btn-primary", :id => "load_more" %>
+<%end%>
+
+</div>
